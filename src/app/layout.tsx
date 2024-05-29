@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { be_Vietnam_Pro } from "@/app/ui/fonts";
+import Logo from "@/app/ui/logo";
 
 export const metadata: Metadata = {
   title: "Country page",
@@ -15,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${be_Vietnam_Pro.className} bg-1B1D1F relative h-full`}>
+        <Logo />
+        {children}
+      </body>
     </html>
   );
 }
