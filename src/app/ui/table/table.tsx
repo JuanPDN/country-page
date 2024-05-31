@@ -1,6 +1,8 @@
 import Image from "next/image";
 
-export default function Table() {
+export default async function Table() {
+  
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full">
@@ -15,14 +17,30 @@ export default function Table() {
         </thead>
         <tbody className="text-D2D5DA mt-4">
           <tr className="*:pt-4 *:pr-4 *:pl-0">
-            <td>Colombia</td>
+            <td>
+              <Image
+                src={""}
+                alt={""}
+                height={38}
+                width={50}
+                className="rounded-sm h-9 w-14"
+              />
+            </td>
             <td>Colombia</td>
             <td>1800000</td>
             <td>345mil</td>
             <td>America</td>
           </tr>
           <tr className="*:pt-6 *:pr-4 *:pl-0">
-            <td>Colombia</td>
+            <td>
+              <Image
+                src={""}
+                alt={""}
+                height={38}
+                width={50}
+                className="rounded-sm h-9 w-14"
+              />
+            </td>
             <td>Colombia</td>
             <td>1800000</td>
             <td>345mil</td>

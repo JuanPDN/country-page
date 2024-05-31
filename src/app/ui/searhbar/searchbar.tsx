@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-export default function Searchbar() {
+export default function Searchbar({ numCountries }: { numCountries: number }) {
   return (
     <div className="pb-9 flex flex-col gap-4 sm:flex-row sm:gap-0 justify-between items-center">
-      <p className="self-start font-medium text-base">Found 234 countries</p>
+      <p className="self-start font-medium text-base">Found {numCountries} countries</p>
       <label
         htmlFor="searchbar"
         className="relative py-2 pl-11 pr-10 bg-282B30 rounded-lg"
