@@ -1,6 +1,23 @@
+"use client";
+
 import Image from "next/image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function SideNav() {
+  const pathname = usePathname();
+  const searhcParams = useSearchParams();
+  const { replace } = useRouter();
+
+  const handlerFilters = (value: string) => {
+    const params = new URLSearchParams(searhcParams);
+    if (value) {
+      params.set("order", value);
+    } else {
+      params.delete("order");
+    }
+    replace(`${pathname}?${params}`);
+  };
+
   return (
     <div>
       <nav className="flex flex-col gap-8 text-xs">
@@ -21,6 +38,9 @@ export default function SideNav() {
             name="sort"
             id="sort"
             defaultValue={"population"}
+            onChange={(e) => {
+              handlerFilters(e.target.value);
+            }}
           >
             <option value="name">Name</option>
             <option value="population">Population</option>

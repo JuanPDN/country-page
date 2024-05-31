@@ -12,14 +12,26 @@ export const loadAllCountries = async (): Promise<Countries[]> => {
 
 };
 
-export const orderByPopulation = (data: Countries[]) => {
+const orderByPopulation = (data: Countries[]) => {
     data.sort((a: Countries, b: Countries) => b.population - a.population)
 }
-
-export const orderByname = (data: Countries[]) => {
+const orderByname = (data: Countries[]) => {
     data.sort((a: Countries, b: Countries) => a.name.common.localeCompare(b.name.common))
 }
 
-export const orderByArea = (data: Countries[]) => {
-    data.sort((a: Countries, b: Countries) => a.area - b.area)
+const orderByArea = (data: Countries[]) => {
+    data.sort((a: Countries, b: Countries) =>  b.area - a.area)
+}
+
+export const orderBy = (param: string, data: Countries[]) => {    
+    switch (param) {
+        case "name":
+            return orderByname(data);
+        case "population":
+            return orderByPopulation(data);
+        case "area":
+            return orderByArea(data);
+        default:
+            return orderByPopulation(data)
+    }
 }
