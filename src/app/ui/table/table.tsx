@@ -1,7 +1,8 @@
 import { Countries } from "@/app/interfaces/interfaces";
 import Image from "next/image";
 
-export default async function Table({ countries }: { countries: Countries[] }) {
+export default function Table({ countries }: { countries: Countries[] }) {
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full">
@@ -14,15 +15,18 @@ export default async function Table({ countries }: { countries: Countries[] }) {
             <th>Region</th>
           </tr>
         </thead>
-        <tbody className="text-D2D5DA mt-4">
+        <tbody className="text-D2D5DA">
           {countries.map((countrie, index) => (
-            <tr key={index} className="first:*:pt-4 *:pt-6 *:pr-4 *:pl-0">
+            <tr
+              key={index}
+              className={`${index === 0 ? "*:pt-4" : "*:pt-6"}  *:pr-4 *:pl-0`}
+            >
               <td>
                 <Image
                   src={countrie.flags.png || countrie.flags.svg}
                   alt={countrie.flags.alt || countrie.name.common}
-                  height={38}
-                  width={50}
+                  height={36}
+                  width={56}
                   className="rounded-sm h-9 max-w-14"
                 />
               </td>
