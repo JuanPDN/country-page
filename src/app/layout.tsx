@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${be_Vietnam_Pro.className} bg-1B1D1F relative h-full flex flex-col`}>
+      <body className={`${be_Vietnam_Pro.className} bg-1B1D1F relative h-full flex flex-col selection:text-D2D5DA selection:bg-4E80EE/50`}>
         <Logo />
         {children}
       </body>

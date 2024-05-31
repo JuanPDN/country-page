@@ -12,7 +12,7 @@ export default async function Home() {
         <Searchbar numCountries={countries.length} />
         <div className="grid gap-8 xl:grid-cols-[250px_auto] lg:grid-cols-[200px_auto]">
           <SideNav/>
-          <Table />
+          <Table countries={countries}/>
         </div>
       </main>
     
