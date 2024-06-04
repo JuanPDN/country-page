@@ -1,12 +1,23 @@
 "use client";
 
+import { RegionContext } from "@/app/context/regionContext";
+import { RegionsState } from "@/app/interfaces/interfaces";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useContext } from "react";
 
 export default function SideNav() {
   const pathname = usePathname();
   const searhcParams = useSearchParams();
   const { replace } = useRouter();
+  const regions: string[] = [
+    "Americas",
+    "Antarctic",
+    "Africa",
+    "Asia",
+    "Europe",
+    "Oceania",
+  ];
 
   const handlerFilters = (value: string) => {
     const params = new URLSearchParams(searhcParams);
@@ -17,6 +28,20 @@ export default function SideNav() {
     }
     replace(`${pathname}?${params}`);
   };
+
+  const handlerFilterRegion = (value: string) => {
+    if (regionSelect.includes(value)) {
+      setRegionSelect(
+        regionSelect.filter((region: string) => region !== value)
+      );
+    } else {
+      setRegionSelect([...regionSelect, value]);
+    }
+  };
+
+  const { regionSelect, setRegionSelect } = useContext(
+    RegionContext
+  ) as RegionsState;
 
   return (
     <div>
@@ -51,16 +76,20 @@ export default function SideNav() {
         <div className="flex flex-col gap-2">
           <p className="font-bold">Region</p>
           <div className="flex gap-3 text-sm flex-wrap *:py-2 *:px-3 font-medium">
-            <input
-              className="bg-282B30 rounded-xl text-D2D5DA"
-              type="button"
-              value="Americas"
-            />
-            <input type="button" value="Antartic" />
-            <input type="button" value="Africa" />
-            <input type="button" value="Asia" />
-            <input type="button" value="Europe" />
-            <input type="button" value="Oceania" />
+            {regions.map((e, index) => (
+              <input
+                key={index}
+                className={`${
+                  regionSelect?.includes(e) &&
+                  "bg-282B30 rounded-xl text-D2D5DA"
+                }`}
+                type="button"
+                value={e}
+                onClick={(e) => {
+                  handlerFilterRegion(e.currentTarget.value);
+                }}
+              />
+            ))}
           </div>
         </div>
 

@@ -1,7 +1,17 @@
-import { Countries } from "@/app/interfaces/interfaces";
+"use client";
+
 import Image from "next/image";
+import { useContext } from "react";
+
+import { RegionContext } from "@/app/context/regionContext";
+import { Countries, RegionsState } from "@/app/interfaces/interfaces";
 
 export default function Table({ countries }: { countries: Countries[] }) {
+  const { regionSelect } = useContext(RegionContext) as RegionsState;
+
+  countries = countries.filter((countrie) =>
+    regionSelect.includes(countrie.region)
+  );
 
   return (
     <div className="overflow-x-auto">
@@ -18,7 +28,7 @@ export default function Table({ countries }: { countries: Countries[] }) {
         <tbody className="text-D2D5DA">
           {countries.map((countrie, index) => (
             <tr
-              key={index}
+              key={countrie.cca3}
               className={`${index === 0 ? "*:pt-4" : "*:pt-6"}  *:pr-4 *:pl-0`}
             >
               <td>
@@ -31,8 +41,8 @@ export default function Table({ countries }: { countries: Countries[] }) {
                 />
               </td>
               <td>{countrie.name.common}</td>
-              <td>{countrie.population.toLocaleString()}</td>
-              <td>{countrie.area.toLocaleString()}</td>
+              <td>{countrie.population.toLocaleString("en-US")}</td>
+              <td>{countrie.area.toLocaleString("en-US")}</td>
               <td>{countrie.region}</td>
             </tr>
           ))}
