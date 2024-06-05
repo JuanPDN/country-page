@@ -1,10 +1,11 @@
 "use client";
 
-import { RegionContext } from "@/app/context/regionContext";
-import { RegionsState } from "@/app/interfaces/interfaces";
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useContext } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+import { GlobalContext } from "@/app/context/AppContext";
+import { GlobalState } from "@/app/interfaces/interfaces";
 
 export default function SideNav() {
   const pathname = usePathname();
@@ -30,18 +31,37 @@ export default function SideNav() {
   };
 
   const handlerFilterRegion = (value: string) => {
-    if (regionSelect.includes(value)) {
-      setRegionSelect(
-        regionSelect.filter((region: string) => region !== value)
-      );
+    if (globalState.selectRegion.includes(value)) {
+      setGlobalState((prevGlobalState) => ({
+        ...prevGlobalState,
+        selectRegion: globalState.selectRegion.filter(
+          (region: string) => region !== value
+        ),
+      }));
     } else {
-      setRegionSelect([...regionSelect, value]);
+      setGlobalState((prevGlobalState) => ({
+        ...prevGlobalState,
+        selectRegion: [...globalState.selectRegion, value],
+      }));
     }
   };
 
-  const { regionSelect, setRegionSelect } = useContext(
-    RegionContext
-  ) as RegionsState;
+  const handlerFilterunMember = (checked: boolean) => {
+    setGlobalState((prevGlobalState) => ({
+      ...prevGlobalState,
+      unMember: checked,
+    }));
+  };
+  const handlerFilterIndependent = (checked: boolean) => {
+    setGlobalState((prevGlobalState) => ({
+      ...prevGlobalState,
+      independent: checked,
+    }));
+  };
+
+  const { globalState, setGlobalState } = useContext(
+    GlobalContext
+  ) as GlobalState;
 
   return (
     <div>
@@ -62,7 +82,7 @@ export default function SideNav() {
             className="appearance-none py-3 px-4 outline-none border-282B30 border-2 rounded-lg text-D2D5DA bg-1B1D1F"
             name="sort"
             id="sort"
-            defaultValue={"population"}
+            defaultValue={searhcParams.get("order") || "population"}
             onChange={(e) => {
               handlerFilters(e.target.value);
             }}
@@ -80,7 +100,7 @@ export default function SideNav() {
               <input
                 key={index}
                 className={`${
-                  regionSelect?.includes(e) &&
+                  globalState.selectRegion?.includes(e) &&
                   "bg-282B30 rounded-xl text-D2D5DA"
                 }`}
                 type="button"
@@ -102,6 +122,9 @@ export default function SideNav() {
                 name="unMember"
                 id="unMember"
                 className="appearance-none size-6 border-2 border-6C727F checked:bg-4E80EE checked:border-0 rounded-md peer"
+                onChange={(e) => {
+                  handlerFilterunMember(e.currentTarget.checked);
+                }}
               />
               <p>Member of the United Nations</p>
               <Image
@@ -119,6 +142,9 @@ export default function SideNav() {
                 name="independent"
                 id="independent"
                 className="appearance-none size-6 border-2 border-6C727F checked:bg-4E80EE checked:border-0 rounded-md peer"
+                onChange={(e) => {
+                  handlerFilterIndependent(e.currentTarget.checked);
+                }}
               />
               <p>Independent</p>
               <Image

@@ -1,5 +1,5 @@
 import Table from "@/app/ui/table/table";
-import Searchbar from "@/app/ui/searhbar/searchbar";
+import Searchbar from "@/app/ui/searchbar/searchbar";
 import SideNav from "@/app/ui/dashboard/sidenav";
 import { loadAllCountries, orderBy } from "@/app/lib/repository";
 

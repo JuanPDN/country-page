@@ -3,14 +3,16 @@
 import Image from "next/image";
 import { useContext } from "react";
 
-import { RegionContext } from "@/app/context/regionContext";
-import { Countries, RegionsState } from "@/app/interfaces/interfaces";
+import { GlobalContext } from "@/app/context/AppContext";
+import { Countries, GlobalState } from "@/app/interfaces/interfaces";
 
 export default function Table({ countries }: { countries: Countries[] }) {
-  const { regionSelect } = useContext(RegionContext) as RegionsState;
+  const { globalState } = useContext(GlobalContext) as GlobalState;
 
-  countries = countries.filter((countrie) =>
-    regionSelect.includes(countrie.region)
+  countries = countries.filter((country) =>
+    globalState.selectRegion.includes(country.region) &&
+  (!globalState.independent || country.independent === globalState.independent) &&
+  (!globalState.unMember || country.unMember === globalState.unMember)
   );
 
   return (

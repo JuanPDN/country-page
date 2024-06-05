@@ -115,7 +115,14 @@ export interface PostalCode {
     regex: string;
 }
 
-export interface RegionsState {
-    regionSelect: string[],
-    setRegionSelect: Dispatch<SetStateAction<string[]>>
+export interface GlobalState {
+    globalState: State,
+    setGlobalState: Dispatch<SetStateAction<State>>
+}
+
+interface State {
+    selectRegion: string[],
+    totalCountries: number,
+    unMember: boolean,
+    independent: boolean
 }
