@@ -6,18 +6,32 @@ import { useContext, useEffect } from "react";
 import { GlobalContext } from "@/app/context/AppContext";
 import { Countries, GlobalState } from "@/app/interfaces/interfaces";
 
-export default function Table({ countries }: { countries: Countries[] }) {
+export default function Table({
+  countries,
+  searchParams,
+}: {
+  countries: Countries[];
+  searchParams?: string;
+}) {
   const { globalState, setGlobalState } = useContext(
     GlobalContext
   ) as GlobalState;
 
-  countries = countries.filter(
-    (country) =>
-      globalState.selectRegion.includes(country.region) &&
-      (!globalState.independent ||
-        country.independent === globalState.independent) &&
-      (!globalState.unMember || country.unMember === globalState.unMember)
-  );
+  if (searchParams) {
+    countries = countries.filter((country) =>
+      country.name.common.toLowerCase().includes(searchParams.toLowerCase()) ||
+      country.region.toLowerCase().includes(searchParams.toLowerCase()) ||
+      country.subregion?.toLowerCase().includes(searchParams.toLowerCase())
+    );
+  } else {
+    countries = countries.filter(
+      (country) =>
+        globalState.selectRegion.includes(country.region) &&
+        (!globalState.independent ||
+          country.independent === globalState.independent) &&
+        (!globalState.unMember || country.unMember === globalState.unMember)
+    );
+  }
 
   useEffect(() => {
     setGlobalState((prevGlobalState) => ({
