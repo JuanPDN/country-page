@@ -1,19 +1,30 @@
 "use client";
 
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { GlobalContext } from "@/app/context/AppContext";
 import { Countries, GlobalState } from "@/app/interfaces/interfaces";
 
 export default function Table({ countries }: { countries: Countries[] }) {
-  const { globalState } = useContext(GlobalContext) as GlobalState;
+  const { globalState, setGlobalState } = useContext(
+    GlobalContext
+  ) as GlobalState;
 
-  countries = countries.filter((country) =>
-    globalState.selectRegion.includes(country.region) &&
-  (!globalState.independent || country.independent === globalState.independent) &&
-  (!globalState.unMember || country.unMember === globalState.unMember)
+  countries = countries.filter(
+    (country) =>
+      globalState.selectRegion.includes(country.region) &&
+      (!globalState.independent ||
+        country.independent === globalState.independent) &&
+      (!globalState.unMember || country.unMember === globalState.unMember)
   );
+
+  useEffect(() => {
+    setGlobalState((prevGlobalState) => ({
+      ...prevGlobalState,
+      totalCountries: countries.length,
+    }));
+  }, [countries.length]);
 
   return (
     <div className="overflow-x-auto">
