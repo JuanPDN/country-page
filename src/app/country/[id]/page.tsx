@@ -1,7 +1,13 @@
 import Image from "next/image";
 import CountryCard from "@/app/ui/cards/countryCard";
+import { country } from "@/app/lib/repository";
 
-export default function Country() {
+export default async function Country({ params }: { params: { id: string } }) {
+
+  const id = params.id
+  const data = await country(id)
+  const currencies = Object.values(data.currencies).map((name) => name.name)  
+
   return (
     <div
       className="relative self-center -top-[60px] w-full lg:w-[720px] bg-1B1D1F lg:border-[1px] 
@@ -9,16 +15,16 @@ export default function Country() {
     >
       <div className="relative -top-12 text-6C727F flex flex-col items-center">
         <Image
-          src={"https://flagcdn.com/w320/in.png"}
+          src={data.flags.png || data.flags.svg}
           width={260}
           height={196}
-          alt="bandera"
+          alt={data.flags.alt || data.name.common}
           className="w-[260px] h-[196px] rounded-xl"
         />
 
-        <h1 className="text-[32px] text-D2D5DA font-semibold mt-8">India</h1>
+        <h1 className="text-[32px] text-D2D5DA font-semibold mt-8">{data.name.common}</h1>
         <h2 className="text-base font-medium text-D2D5DA mt-2">
-          Republic of India
+          {data.name.official}
         </h2>
         <div
           className="my-10 flex flex-col sm:flex-row gap-10 *:flex text-D2D5DA text-sm
@@ -26,11 +32,11 @@ export default function Country() {
         >
           <div className="*:px-5 *:py-2 items-center">
             <p>Population</p>
-            <span>1.380.004.385</span>
+            <span>{data.population.toLocaleString("en-US")}</span>
           </div>
           <div className="*:px-5 *:py-2 items-center">
             <p>Area (km²)</p>
-            <span>2.973.190</span>
+            <span>{data.area.toLocaleString("en-US")}</span>
           </div>
         </div>
         <ul
@@ -39,32 +45,32 @@ export default function Country() {
         >
           <li>
             <p>Capital</p>
-            <p className="text-D2D5DA">name capital</p>
+            <p className="text-D2D5DA">{data.capital}</p>
           </li>
           <li>
             <p>Subregion</p>
-            <p className="text-D2D5DA">name subregion</p>
+            <p className="text-D2D5DA">{data.subregion}</p>
           </li>
           <li>
             <p>Languages</p>
-            <p className="text-D2D5DA">name Languages</p>
+            <p className="text-D2D5DA">{Object.values(data.languages).join(", ")}</p>
           </li>
           <li>
             <p>Currencies</p>
-            <p className="text-D2D5DA">name Currencies</p>
+            <p className="text-D2D5DA">{currencies.join(", ")}</p>
           </li>
           <li>
             <p>Continents</p>
-            <p className="text-D2D5DA">name Continents</p>
+            <p className="text-D2D5DA">{data.continents}</p>
           </li>
         </ul>
         <p className="pb-4 mx-8 self-start text-sm">Neighbouring Countries</p>
         <div className="w-full">
-        <div className="text-6C727F overflow-x-auto mx-8">
-          <div className="flex gap-3">
-            <CountryCard src={"https://flagcdn.com/w320/in.png"} />
+          <div className="text-6C727F overflow-x-auto mx-8">
+            <div className="flex gap-3">
+              <CountryCard src={"https://flagcdn.com/w320/in.png"} />
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

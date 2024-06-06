@@ -12,6 +12,17 @@ export const loadAllCountries = async (): Promise<Countries[]> => {
 
 };
 
+export const country = async (id: string): Promise<Countries> => {
+    try {
+        const data: Countries[] = await fetch(`https://restcountries.com/v3.1/alpha/${id}`)
+            .then((data) => data.json())
+        return data[0];
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
 const orderByPopulation = (data: Countries[]) => {
     data.sort((a: Countries, b: Countries) => b.population - a.population)
 }
@@ -20,10 +31,10 @@ const orderByname = (data: Countries[]) => {
 }
 
 const orderByArea = (data: Countries[]) => {
-    data.sort((a: Countries, b: Countries) =>  b.area - a.area)
+    data.sort((a: Countries, b: Countries) => b.area - a.area)
 }
 
-export const orderBy = (param: string, data: Countries[]) => {    
+export const orderBy = (param: string, data: Countries[]) => {
     switch (param) {
         case "name":
             return orderByname(data);

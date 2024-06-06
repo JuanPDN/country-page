@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 
 import { GlobalContext } from "@/app/context/AppContext";
@@ -13,15 +14,19 @@ export default function Table({
   countries: Countries[];
   searchParams?: string;
 }) {
+  const router = useRouter()
   const { globalState, setGlobalState } = useContext(
     GlobalContext
   ) as GlobalState;
 
   if (searchParams) {
-    countries = countries.filter((country) =>
-      country.name.common.toLowerCase().includes(searchParams.toLowerCase()) ||
-      country.region.toLowerCase().includes(searchParams.toLowerCase()) ||
-      country.subregion?.toLowerCase().includes(searchParams.toLowerCase())
+    countries = countries.filter(
+      (country) =>
+        country.name.common
+          .toLowerCase()
+          .includes(searchParams.toLowerCase()) ||
+        country.region.toLowerCase().includes(searchParams.toLowerCase()) ||
+        country.subregion?.toLowerCase().includes(searchParams.toLowerCase())
     );
   } else {
     countries = countries.filter(
@@ -53,24 +58,27 @@ export default function Table({
           </tr>
         </thead>
         <tbody className="text-D2D5DA">
-          {countries.map((countrie, index) => (
+          {countries.map((country, index) => (
             <tr
-              key={countrie.cca3}
-              className={`${index === 0 ? "*:pt-4" : "*:pt-6"}  *:pr-4 *:pl-0`}
+              key={country.cca3}
+              className={`${index === 0 ? "*:pt-4" : "*:pt-6"}  *:pr-4 *:pl-0 cursor-pointer`}
+              onClick={()=>{
+                router.push(`/country/${country.cca3}`)
+              }}
             >
               <td>
                 <Image
-                  src={countrie.flags.png || countrie.flags.svg}
-                  alt={countrie.flags.alt || countrie.name.common}
+                  src={country.flags.png || country.flags.svg}
+                  alt={country.flags.alt || country.name.common}
                   height={36}
                   width={56}
                   className="rounded-sm h-9 max-w-14"
                 />
               </td>
-              <td>{countrie.name.common}</td>
-              <td>{countrie.population.toLocaleString("en-US")}</td>
-              <td>{countrie.area.toLocaleString("en-US")}</td>
-              <td>{countrie.region}</td>
+              <td>{country.name.common}</td>
+              <td>{country.population.toLocaleString("en-US")}</td>
+              <td>{country.area.toLocaleString("en-US")}</td>
+              <td>{country.region}</td>
             </tr>
           ))}
         </tbody>
