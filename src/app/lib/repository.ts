@@ -2,7 +2,7 @@ import { Countries } from "../interfaces/interfaces";
 
 export const loadAllCountries = async (): Promise<Countries[]> => {
     try {
-        const data: Countries[] = await fetch("https://restcountries.com/v3.1/all")
+        const data: Countries[] = await fetch("http://localhost:3000/api/countries")
             .then((data) => data.json())
         return data;
     } catch (error) {
@@ -14,7 +14,7 @@ export const loadAllCountries = async (): Promise<Countries[]> => {
 
 export const country = async (id: string): Promise<Countries> => {
     try {
-        const data: Countries[] = await fetch(`https://restcountries.com/v3.1/alpha/${id}`)
+        const data: Countries[] = await fetch(`http://localhost:3000/api/countries/${id}`)
             .then((data) => data.json())
         return data[0];
     } catch (error) {

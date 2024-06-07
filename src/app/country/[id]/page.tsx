@@ -6,7 +6,7 @@ export default async function Country({ params }: { params: { id: string } }) {
 
   const id = params.id
   const data = await country(id)
-  const currencies = Object.values(data.currencies).map((name) => name.name)  
+  const currencies = Object.values(data?.currencies).map((name) => name.name)
 
   return (
     <div
