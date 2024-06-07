@@ -3,10 +3,9 @@ import CountryCard from "@/app/ui/cards/countryCard";
 import { country } from "@/app/lib/repository";
 
 export default async function Country({ params }: { params: { id: string } }) {
-
-  const id = params.id
-  const data = await country(id)
-  const currencies = Object.values(data?.currencies).map((name) => name.name)
+  const id = params.id;
+  const data = await country(id);
+  const currencies = Object.values(data?.currencies).map((name) => name.name);
 
   return (
     <div
@@ -22,7 +21,9 @@ export default async function Country({ params }: { params: { id: string } }) {
           className="w-[260px] h-[196px] rounded-xl"
         />
 
-        <h1 className="text-[32px] text-D2D5DA font-semibold mt-8">{data.name.common}</h1>
+        <h1 className="text-[32px] text-D2D5DA font-semibold mt-8">
+          {data.name.common}
+        </h1>
         <h2 className="text-base font-medium text-D2D5DA mt-2">
           {data.name.official}
         </h2>
@@ -53,7 +54,9 @@ export default async function Country({ params }: { params: { id: string } }) {
           </li>
           <li>
             <p>Languages</p>
-            <p className="text-D2D5DA">{Object.values(data.languages).join(", ")}</p>
+            <p className="text-D2D5DA">
+              {Object.values(data.languages).join(", ")}
+            </p>
           </li>
           <li>
             <p>Currencies</p>
@@ -67,8 +70,8 @@ export default async function Country({ params }: { params: { id: string } }) {
         <p className="pb-4 mx-8 self-start text-sm">Neighbouring Countries</p>
         <div className="w-full">
           <div className="text-6C727F overflow-x-auto mx-8">
-            <div className="flex gap-3">
-              <CountryCard src={"https://flagcdn.com/w320/in.png"} />
+            <div className="flex gap-4">
+              {data.borders && <CountryCard neighbour={data.borders} />}
             </div>
           </div>
         </div>
