@@ -40,7 +40,7 @@ export default function Searchbar() {
           className="absolute top-2 left-3"
         />
         <input
-          type="text"
+          type="search"
           id="searchbar"
           placeholder="Search by Name, Region, Subregion"
           className="outline-none bg-282B30 text-D2D5DA text-sm placeholder:text-6C727F font-medium sm:w-64"
