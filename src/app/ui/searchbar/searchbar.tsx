@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 
 import { GlobalContext } from "@/app/context/AppContext";
 import { GlobalState } from "@/app/interfaces/interfaces";
@@ -12,6 +12,7 @@ export default function Searchbar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handlerSearch = (value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -20,6 +21,15 @@ export default function Searchbar() {
     } else {
       params.delete("search");
     }
+    replace(`${pathname}?${params}`);
+  };
+
+  const handlerCancel = () => {
+    const params = new URLSearchParams(searchParams);
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+    params.delete("search");
     replace(`${pathname}?${params}`);
   };
 
@@ -40,15 +50,29 @@ export default function Searchbar() {
           className="absolute top-2 left-3"
         />
         <input
-          type="search"
+          ref={inputRef}
+          type="text"
           id="searchbar"
           placeholder="Search by Name, Region, Subregion"
           className="outline-none bg-282B30 text-D2D5DA text-sm placeholder:text-6C727F font-medium sm:w-64"
           defaultValue={searchParams.get("search")?.toString()}
-          onChange={(e)=>{
-            handlerSearch(e.target.value)
+          onChange={(e) => {
+            handlerSearch(e.target.value);
           }}
         />
+
+        {searchParams.get("search") && (
+          <Image
+            src={"/circle-x.svg"}
+            alt="cancel"
+            width={16}
+            height={16}
+            className="absolute top-3 right-3"
+            onClick={() => {
+              handlerCancel();
+            }}
+          />
+        )}
       </label>
     </div>
   );
