@@ -44,6 +44,7 @@ export default function Searchbar() {
           id="searchbar"
           placeholder="Search by Name, Region, Subregion"
           className="outline-none bg-282B30 text-D2D5DA text-sm placeholder:text-6C727F font-medium sm:w-64"
+          defaultValue={searchParams.get("search")?.toString()}
           onChange={(e)=>{
             handlerSearch(e.target.value)
           }}
