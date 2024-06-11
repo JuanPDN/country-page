@@ -44,6 +44,7 @@ export default function SideNav() {
         selectRegion: [...globalState.selectRegion, value],
       }));
     }
+    updateURL()
   };
 
   const handlerFilterunMember = (checked: boolean) => {
@@ -51,12 +52,20 @@ export default function SideNav() {
       ...prevGlobalState,
       unMember: checked,
     }));
+    updateURL()
   };
   const handlerFilterIndependent = (checked: boolean) => {
     setGlobalState((prevGlobalState) => ({
       ...prevGlobalState,
       independent: checked,
     }));
+    updateURL()
+  };
+
+  const updateURL = () => {
+    const params = new URLSearchParams(searhcParams);
+    params.delete("page")
+    replace(`${pathname}?${params}`);
   };
 
   const { globalState, setGlobalState } = useContext(

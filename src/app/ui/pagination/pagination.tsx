@@ -42,7 +42,7 @@ export default function Pagination({ pages }: { pages: number }) {
   const totalPages = pagination(pages, actualPage);
 
   return (
-    <div className={`flex justify-center items-center gap-3 *:rounded-sm mt-4`}>
+    <div className="flex justify-center items-center gap-3 *:rounded-sm mt-4">
       <Image
         src={"/caret-left.svg"}
         alt="prev"
