@@ -46,7 +46,7 @@ export default function Table({
       ...prevGlobalState,
       totalCountries: countries.length,
     }));
-  }, [countries.length]);
+  }, [countries.length, setGlobalState]);
 
   const itemsPage = 12;
   const start = (currentPage - 1) * itemsPage;
