@@ -23,7 +23,7 @@ export const loadAllCountries = async (): Promise<Countries[]> => {
 export const country = async (id: string): Promise<Countries | any> => {
     try {
         if (!api_url) {
-            return {}
+            return []
         }
         const data: Countries[] = await fetch(`${api_url}/api/countries/${id}`)
             .then((data) => data.json())

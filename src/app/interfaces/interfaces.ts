@@ -10,7 +10,7 @@ export interface Countries {
     independent: boolean;
     status: string;
     unMember: boolean;
-    currencies: { [key: string]: Currency };
+    currencies?: { [key: string]: Currency};
     idd: Idd;
     capital: string[];
     altSpellings: string[];
