@@ -5,6 +5,8 @@ import { Countries } from "@/app/interfaces/interfaces";
 dotenv.config()
 const api_url = process.env.API_URL
 
+
+
 export const loadAllCountries = async (): Promise<Countries[]> => {
     try {
         if (!api_url) {

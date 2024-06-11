@@ -5,7 +5,7 @@ import { country } from "@/app/lib/repository";
 export default async function Country({ params }: { params: { id: string } }) {
   const id = params.id;
   const data = await country(id);
-  const currencies =data && Object?.values(data?.currencies).map(
+  const currencies = data && Object?.values(data?.currencies).map(
     (name: any) => name.name
   );
 
