@@ -3,14 +3,17 @@ import Searchbar from "@/app/ui/searchbar/searchbar";
 import SideNav from "@/app/ui/dashboard/sidenav";
 import { loadAllCountries, orderBy } from "@/app/lib/repository";
 
+
 export default async function Home({
   searchParams,
 }: {
-  searchParams?: { order?: string; search?: string };
+  searchParams?: { order?: string; search?: string; page?: string };
 }) {
   const countries = await loadAllCountries();
   const search = searchParams?.search;
   const order = searchParams?.order || "";
+  const page = Number(searchParams?.page) || 1;
+
   orderBy(order, countries);
 
   return (
@@ -18,7 +21,7 @@ export default async function Home({
       <Searchbar />
       <div className="grid gap-8 xl:grid-cols-[250px_auto] lg:grid-cols-[200px_auto]">
         <SideNav />
-        <Table countries={countries} searchParams={search}/>
+        <Table countries={countries} searchParams={search} currentPage={page} />
       </div>
     </main>
   );

@@ -67,14 +67,18 @@ export default async function Country({ params }: { params: { id: string } }) {
             <p className="text-D2D5DA">{data.continents}</p>
           </li>
         </ul>
-        <p className="pb-4 mx-8 self-start text-sm">Neighbouring Countries</p>
-        <div className="w-full">
-          <div className="text-6C727F overflow-x-auto mx-8">
-            <div className="flex gap-4">
-              {data.borders && <CountryCard neighbour={data.borders} />}
+        {data.borders && (
+          <p className="pb-4 mx-8 self-start text-sm">Neighbouring Countries</p>
+        )}
+        {data.borders && (
+          <div className="w-full">
+            <div className="text-6C727F overflow-x-auto mx-8">
+              <div className="flex gap-4">
+                <CountryCard neighbour={data.borders} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

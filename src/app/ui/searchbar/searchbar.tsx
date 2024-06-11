@@ -21,6 +21,7 @@ export default function Searchbar() {
     } else {
       params.delete("search");
     }
+    params.delete("page");
     replace(`${pathname}?${params}`);
   };
 
@@ -29,6 +30,7 @@ export default function Searchbar() {
     if (inputRef.current) {
       inputRef.current.value = "";
     }
+    params.delete("page");
     params.delete("search");
     replace(`${pathname}?${params}`);
   };
@@ -38,6 +40,7 @@ export default function Searchbar() {
       <p className="self-start font-medium text-base">
         Found {globalState.totalCountries} countries
       </p>
+
       <label
         htmlFor="searchbar"
         className="relative py-2 pl-11 pr-10 bg-282B30 rounded-lg"

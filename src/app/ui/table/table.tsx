@@ -6,15 +6,18 @@ import { useContext, useEffect } from "react";
 
 import { GlobalContext } from "@/app/context/AppContext";
 import { Countries, GlobalState } from "@/app/interfaces/interfaces";
+import Pagination from "@/app/ui/pagination/pagination";
 
 export default function Table({
   countries,
   searchParams,
+  currentPage,
 }: {
   countries: Countries[];
   searchParams?: string;
+  currentPage: number;
 }) {
-  const router = useRouter()
+  const router = useRouter();
   const { globalState, setGlobalState } = useContext(
     GlobalContext
   ) as GlobalState;
@@ -45,6 +48,11 @@ export default function Table({
     }));
   }, [countries.length]);
 
+  const itemsPage = 12;
+  const start = (currentPage - 1) * itemsPage;
+  const end = itemsPage * currentPage;
+  const totalPage = Math.ceil(countries.length / 12);
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full">
@@ -58,12 +66,14 @@ export default function Table({
           </tr>
         </thead>
         <tbody className="text-D2D5DA">
-          {countries.map((country, index) => (
+          {countries.slice(start, end).map((country, index) => (
             <tr
               key={country.cca3}
-              className={`${index === 0 ? "*:pt-4" : "*:pt-6"}  *:pr-4 *:pl-0 cursor-pointer`}
-              onClick={()=>{
-                router.push(`/country/${country.cca3}`)
+              className={`${
+                index === 0 ? "*:pt-4" : "*:pt-6"
+              }  *:pr-4 *:pl-0 cursor-pointer`}
+              onClick={() => {
+                router.push(`/country/${country.cca3}`);
               }}
             >
               <td>
@@ -83,6 +93,7 @@ export default function Table({
           ))}
         </tbody>
       </table>
+      {totalPage >= 2 && <Pagination pages={totalPage} />}
     </div>
   );
 }
