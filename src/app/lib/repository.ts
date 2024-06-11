@@ -1,8 +1,16 @@
-import { Countries } from "../interfaces/interfaces";
+import dotenv from "dotenv"
+
+import { Countries } from "@/app/interfaces/interfaces";
+
+dotenv.config()
+const api_url = process.env.API_URL
 
 export const loadAllCountries = async (): Promise<Countries[]> => {
     try {
-        const data: Countries[] = await fetch("http://localhost:3000/api/countries")
+        if (!api_url) {
+            return []
+        }
+        const data: Countries[] = await fetch(`${api_url}/api/countries`)
             .then((data) => data.json())
         return data;
     } catch (error) {
@@ -12,9 +20,12 @@ export const loadAllCountries = async (): Promise<Countries[]> => {
 
 };
 
-export const country = async (id: string): Promise<Countries> => {
+export const country = async (id: string): Promise<Countries | null> => {
     try {
-        const data: Countries[] = await fetch(`http://localhost:3000/api/countries/${id}`)
+        if (!api_url) {
+            return null
+        }
+        const data: Countries[] = await fetch(`${api_url}/api/countries/${id}`)
             .then((data) => data.json())
         return data[0];
     } catch (error) {
