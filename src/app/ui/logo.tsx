@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Logo() {
   return (
-    <Link href={"#"}>
+    <Link href={"/"}>
       <div className="relative bg-hero w-full h-[300px] bg-center flex justify-center">
         <Image
           src={"/Logo.svg"}
