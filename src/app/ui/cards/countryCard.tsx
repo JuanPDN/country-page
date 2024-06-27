@@ -29,6 +29,7 @@ export default async function CountryCard({
       className="flex flex-col gap-2 shrink-0 pb-4"
     >
       <Image
+        unoptimized
         src={border.flags.png || border.flags.svg}
         width={80}
         height={56}
