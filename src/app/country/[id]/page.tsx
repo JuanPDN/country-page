@@ -17,6 +17,7 @@ export default async function Country({ params }: { params: { id: string } }) {
       >
         <div className="relative -top-12 text-6C727F flex flex-col items-center">
           <Image
+            unoptimized
             src={data.flags.png || data.flags.svg}
             width={260}
             height={196}

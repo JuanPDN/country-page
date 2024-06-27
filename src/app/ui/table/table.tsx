@@ -78,6 +78,7 @@ export default function Table({
             >
               <td>
                 <Image
+                  unoptimized
                   src={country.flags.png || country.flags.svg}
                   alt={country.flags.alt || country.name.common}
                   height={36}
