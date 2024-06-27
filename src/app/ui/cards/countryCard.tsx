@@ -1,28 +1,17 @@
-import { Countries } from "@/app/interfaces/interfaces";
 import Image from "next/image";
 import Link from "next/link";
+
+import { allNeighbours } from "@/app/lib/repository";
 
 export default async function CountryCard({
   neighbour,
 }: {
   neighbour: string[];
 }) {
-  const neighboursData = await Promise.all(
-    neighbour.map((country) => {
-      return fetch(`http://localhost:3000/api/countries/${country}`).then(
-        async (response) => {
-          const data = await response.json();
-          return data;
-        }
-      );
-    })
-  );
 
-  const neighbours: Countries[] = neighboursData.map(
-    (neighbour) => neighbour[0]
-  );
+  const neighboursData = await allNeighbours(neighbour);
 
-  return neighbours.map((border, index) => (
+  return neighboursData.map((border, index) => (
     <Link
       href={`/country/${border.cca3}`}
       key={index}

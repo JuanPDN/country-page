@@ -12,7 +12,7 @@ export const loadAllCountries = async (): Promise<Countries[]> => {
         if (!api_url) {
             return []
         }
-        const data: Countries[] = await fetch(`${api_url}/api/countries`)
+        const data: Countries[] = await fetch(`${api_url}`)
             .then((data) => data.json())
         return data;
     } catch (error) {
@@ -22,14 +22,28 @@ export const loadAllCountries = async (): Promise<Countries[]> => {
 
 };
 
+export const allNeighbours = async (neighbour: string[]) => {
+    const neighboursData = await Promise.all(
+        neighbour.map((country) => {
+            return fetch(`${api_url}/${country}`).then(
+                async (response) => {
+                    const data = await response.json();
+                    return data;
+                }
+            );
+        })
+    );
+    return neighboursData;
+}
+
 export const country = async (id: string): Promise<Countries | any> => {
     try {
         if (!api_url) {
             return null
         }
-        const data: Countries[] = await fetch(`${api_url}/api/countries/${id}`)
+        const data = await fetch(`${api_url}/${id}`)
             .then((data) => data.json())
-        return data[0];
+        return data;
     } catch (error) {
         console.error(error);
         throw error;
