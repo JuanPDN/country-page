@@ -5,9 +5,9 @@ import { country } from "@/app/lib/repository";
 export default async function Country({ params }: { params: { id: string } }) {
   const id = params.id;
   const data = await country(id);  
-  const currencies = data && Object?.values(data?.currencies).map(
-    (name: any) => name.name
-  );
+  
+  const currencies = data.currencies ? Object?.values(data?.currencies).map(
+    (name: any) => name.name) : [""];
   
   return (
     data && (
@@ -59,7 +59,7 @@ export default async function Country({ params }: { params: { id: string } }) {
             <li>
               <p>Languages</p>
               <p className="text-D2D5DA">
-                {Object.values(data.languages).join(", ")}
+                {data.languages ? Object.values(data.languages).join(", ") : ""}
               </p>
             </li>
             <li>
