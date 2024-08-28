@@ -56,7 +56,7 @@ export default function Pagination({ pages }: { pages: number }) {
           key={index}
           type="button"
           value={page}
-          className={`${actualPage == page && "bg-282B30"} size-6`}
+          className={`${actualPage == page && "bg-282B30"} size-6 cursor-pointer hover:bg-282B30`}
           onClick={(e) => selectPage(e.currentTarget.value)}
         />
       ))}
@@ -66,9 +66,8 @@ export default function Pagination({ pages }: { pages: number }) {
         alt="next"
         width={24}
         height={24}
-        className={`hover:bg-282B30 ${
-          actualPage == pages && "cursor-not-allowed"
-        }`}
+        className={`hover:bg-282B30 ${actualPage == pages && "cursor-not-allowed"
+          }`}
         onClick={() => nextPage()}
       />
     </div>
